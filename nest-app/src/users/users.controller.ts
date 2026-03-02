@@ -17,6 +17,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../auth/roles.guard';
+import { Request } from '@nestjs/common';
 
 @Controller('users')
 @UseGuards(AuthGuard('jwt')) 
@@ -34,9 +35,9 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.findOne(id);
+  @Get('profile')
+  getProfile(@Request() req: any) {
+    return req.user;
   }
 
   @Patch(':id')
